@@ -1,0 +1,114 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Photo Upload & Payment</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f6f6f6;
+      color: #333;
+      text-align: center;
+      padding: 30px;
+    }
+
+    .container {
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      max-width: 500px;
+      margin: auto;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+
+    input[type=file], input[type=text], button {
+      display: block;
+      width: 80%;
+      margin: 10px auto;
+      padding: 10px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+      font-size: 16px;
+    }
+
+    button {
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+
+    #qr {
+      width: 180px;
+      margin: 20px auto;
+      display: block;
+    }
+
+    #total {
+      font-size: 18px;
+      font-weight: bold;
+    }
+
+    #paymentSection, #screenshotSection {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Upload Your Photos</h1>
+    <p>₹100 per photo</p>
+    <input type="file" id="photoUpload" multiple accept="image/*">
+    <p id="photoCount"></p>
+    <p id="total"></p>
+
+    <div id="paymentSection">
+      <h2>Step 1: Pay with GPay / PhonePe</h2>
+      <img id="qr" src="https://i.imgur.com/qQOoadz.jpeg" alt="QR Code">
+      <p>Pay to: <strong>8308640585</strong></p>
+      <button onclick="showScreenshotSection()">I have paid</button>
+    </div>
+
+    <div id="screenshotSection">
+      <h2>Step 2: DM Payment Screenshot</h2>
+      <input type="text" id="userName" placeholder="Your Name (Optional)">
+      <button onclick="goToInstagram()">Send on Instagram</button>
+      <p>You'll be redirected to @shutterrstories. DM the screenshot.</p>
+    </div>
+  </div>
+
+  <script>
+    const upload = document.getElementById('photoUpload');
+    const photoCount = document.getElementById('photoCount');
+    const total = document.getElementById('total');
+    const paymentSection = document.getElementById('paymentSection');
+    const screenshotSection = document.getElementById('screenshotSection');
+
+    let photoTotal = 0;
+    let photoQty = 0;
+
+    upload.addEventListener('change', () => {
+      const count = upload.files.length;
+      photoQty = count;
+      photoTotal = count * 100;
+      photoCount.textContent = `${count} photo(s) selected.`;
+      total.textContent = `Total: ₹${photoTotal}`;
+      if (count > 0) {
+        paymentSection.style.display = 'block';
+      } else {
+        paymentSection.style.display = 'none';
+        screenshotSection.style.display = 'none';
+      }
+    });
+
+    function showScreenshotSection() {
+      screenshotSection.style.display = 'block';
+    }
+
+    function goToInstagram() {
+      window.open('https://www.instagram.com/shutterrstories/', '_blank');
+    }
+  </script>
+</body>
+</html>
